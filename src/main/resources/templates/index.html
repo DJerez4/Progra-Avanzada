@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Sistema de Estacionamiento</title>
+</head>
+<body>
+<h1>App de Estacionamiento</h1>
+
+<form action="#" th:action="@{/generarTicket}" method="post">
+    <button type="submit">Generar Ticket</button>
+</form>
+
+
+<h2>Tickets Disponibles</h2>
+<table border="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Hora de Entrada</th>
+        <th>Hora de Salida</th>
+        <th>Precio</th>
+        <th>Acciones</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="ticket : ${tickets}">
+        <td th:text="${ticket.id}">ID</td>
+        <td th:text="${ticket.horaEntrada}">Hora de Entrada</td>
+        <td th:text="${ticket.horaSalida}">Hora de Salida</td>
+        <td th:text="${ticket.precio}">Precio</td>
+        <td>
+            <form th:action="@{/calcularPrecio}" method="get" style="display:inline;">
+                <input type="hidden" th:name="id" th:value="${ticket.id}">
+                <button type="submit">Calcular Precio</button>
+            </form>
+            <form th:action="@{/eliminarTicket}" method="get" style="display:inline;">
+                <input type="hidden" th:name="id" th:value="${ticket.id}">
+                <button type="submit">Eliminar</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>
