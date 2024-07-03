@@ -7,11 +7,13 @@ public class Ticket {
     private int id;
     private int precio;
 
+    // Constructor
     public Ticket(LocalDateTime horaEntrada, int id) {
         this.horaEntrada = horaEntrada;
         this.id = id;
     }
 
+    // Getters y setters
     public LocalDateTime getHoraEntrada() {
         return horaEntrada;
     }

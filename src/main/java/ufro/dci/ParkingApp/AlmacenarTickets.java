@@ -1,4 +1,5 @@
 package ufro.dci.ParkingApp;
+
 import org.springframework.stereotype.Component;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -9,10 +10,13 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+// Los printStackTrace deberian registrarse en un sistema de logging
+
 @Component
 public class AlmacenarTickets {
     private static final String NOMBRE_ARCHIVO = "tickets.txt";
 
+    // Guarda un ticket en el archivo
     public void guardarTicket(Ticket ticket) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(NOMBRE_ARCHIVO, true))) {
             writer.write(String.format("%s;%s;%d;%d%n",
@@ -21,10 +25,12 @@ public class AlmacenarTickets {
                     ticket.getId(),
                     ticket.getPrecio()));
         } catch (IOException e) {
-            e.printStackTrace(); //buena práctica
+
+            e.printStackTrace();
         }
     }
 
+    // Carga todos los tickets desde el archivo
     public List<Ticket> cargarTickets() {
         List<Ticket> tickets = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(NOMBRE_ARCHIVO))) {
@@ -41,11 +47,13 @@ public class AlmacenarTickets {
                 tickets.add(ticket);
             }
         } catch (IOException e) {
-            e.printStackTrace(); //buena práctica
+
+            e.printStackTrace();
         }
         return tickets;
     }
 
+    // Encuentra un ticket por su ID
     public Ticket encontrarTicketPorId(int id) {
         List<Ticket> tickets = cargarTickets();
         for (Ticket ticket : tickets) {
@@ -56,6 +64,7 @@ public class AlmacenarTickets {
         return null;
     }
 
+    // Actualiza un ticket existente
     public void actualizarTicket(Ticket ticketActualizado) {
         List<Ticket> tickets = cargarTickets();
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(NOMBRE_ARCHIVO))) {
@@ -70,10 +79,12 @@ public class AlmacenarTickets {
                         ticket.getPrecio()));
             }
         } catch (IOException e) {
-            e.printStackTrace(); //buena práctica
+
+            e.printStackTrace();
         }
     }
 
+    // Elimina un ticket por su ID
     public void eliminarTicket(int id) {
         List<Ticket> tickets = cargarTickets();
         tickets.removeIf(ticket -> ticket.getId() == id);
@@ -86,7 +97,8 @@ public class AlmacenarTickets {
                         ticket.getPrecio()));
             }
         } catch (IOException e) {
-            e.printStackTrace(); //buena práctica
+
+            e.printStackTrace();
         }
     }
 }
